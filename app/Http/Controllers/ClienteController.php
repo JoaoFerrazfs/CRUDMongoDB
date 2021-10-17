@@ -9,40 +9,43 @@ use Jenssegers\Mongodb\Eloquent\Model;
 
 class ClienteController extends Controller
 {
-  public function index()
-  {
+    public function index()
+    {
 
-    $cliente = Cliente::all();
+        $cliente = Cliente::all();
 
-    return view('welcome', ['cliente' => $cliente]);
-  }
+        return view('welcome', ['cliente' => $cliente]);
+    }
 
-  public function cadastrar(Request $request)
-  {
-    $cliente = new Cliente;
+    public function cadastrar(Request $request)
+    {
+        $cliente = new Cliente;
 
-    $cliente->nome = $request->nome;
-    $cliente->telefone = $request->telefone;
-    $cliente->email = $request->email;
+        $cliente->nome = $request->nome;
+        $cliente->telefone = $request->telefone;
+        $cliente->email = $request->email;
+        $cliente->save();
 
-    $cliente->save();
-    return redirect('/');
-  }
+        return redirect('/');
+    }
 
-  public function visualizar($id){
-    $cliente = Cliente::findOrFail($id);
-    return view('viewCliente.visualizarCliente', ['cliente' => $cliente]);
-  }
+    public function visualizar($id)
+    {
+        $cliente = Cliente::findOrFail($id);
+        return view('viewCliente.visualizarCliente', ['cliente' => $cliente]);
+    }
 
-  public function destroy($id){
-    $cliente = Cliente::findOrFail($id)->delete();   
-    return redirect('/');
-  }
+    public function destroy($id)
+    {
+        $cliente = Cliente::findOrFail($id)->delete();
+        return redirect('/');
+    }
 
-  public function update(Request $request){
-    $dados=$request->all();
-    Cliente::findOrFail($request->id)->update($dados);   
-    return redirect('/');
+    public function update(Request $request)
+    {
+        $dados = $request->all();
+        Cliente::findOrFail($request->id)->update($dados);
+        return redirect('/');
 
-  }
+    }
 }
